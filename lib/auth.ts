@@ -1,10 +1,9 @@
-import NextAuth from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "./db";
 import { compare } from "bcryptjs";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  // Без Prisma Adapter, используем JWT-сессии
+export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   providers: [
     Credentials({
@@ -26,4 +25,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     })
   ],
   secret: process.env.NEXTAUTH_SECRET
-});
+};
