@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0a0a;
+  --fg: #f5f5f5;
+  --brand: #facc15; /* yellow */
+}
+html, body { min-height: 100%; }
+body { background: var(--bg); color: var(--fg); }
+.card { @apply rounded-2xl bg-neutral-900 border border-neutral-800 p-6 shadow; }
+.btn { @apply rounded-xl px-4 py-2 font-bold transition; }
+.btn-primary { @apply bg-yellow-300 text-black hover:brightness-95; }
+.input { @apply w-full rounded-xl border border-neutral-700 bg-neutral-950 px-3 py-2; }
+.label { @apply block text-sm font-semibold mb-1; }
+.link { @apply underline underline-offset-4 hover:no-underline; }
