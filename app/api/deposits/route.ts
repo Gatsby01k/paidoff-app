@@ -3,8 +3,12 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
+// Небольшой типобезопасный каст, чтобы TS не ругался на session.user
+type SessionUser = { email?: string | null };
+type SessionLike = { user?: SessionUser } | null;
+
 export async function GET() {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerSession(authOptions)) as SessionLike;
   if (!session?.user?.email) return NextResponse.json({ items: [] });
 
   const user = await db.user.findUnique({ where: { email: session.user.email } });
@@ -18,7 +22,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerSession(authOptions)) as SessionLike;
   if (!session?.user?.email) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
